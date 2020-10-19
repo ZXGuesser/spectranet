@@ -49,6 +49,16 @@ void server(char *file, int port);
 void getdata(char *file, char *data);
 
 int main(int argc, char **argv) {
+	#ifdef WIN32
+	WSADATA wsaData;
+
+	if(WSAStartup(MAKEWORD(2,0), &wsaData) != 0)
+	{
+		perror("Winsock");
+		return(-1);
+	}
+	#endif
+	
 	if(argc < 2) {
 		fprintf(stderr, "Usage: %s <serialfile>\n", argv[0]);
 		exit(-1);
